@@ -1,0 +1,10 @@
+class MessageCode:
+    REFUSE = 13
+    CREATE_SECRET_KEY = 4
+    INVALID_DATA = 6
+    INVALID_MESSAGE_CODE = 8
+    SEND_MESSAGE = 1
+    SEND_FILE = 2
+    LOGIN = 3
+    NAME_ALREADY_TAKEN = 9
+    GET_MESSAGES = 7
