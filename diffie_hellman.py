@@ -1,5 +1,9 @@
-from sympy import isprime, randprime
+from sympy import isprime, randprime, is_primitive_root
 from random import randint
+
+
+class DiffieHellmanError(Exception):
+    pass
 
 
 def validate_values(p, g, A) -> bool:
@@ -22,24 +26,34 @@ def generate_g(q, p):
     return None
 
 
-def generate_values() -> tuple[int, int, int, int]:
-    q = randprime(2**64, 2**128)
+def generate_q_and_p():
+    q = randprime(2 ** 64, 2 ** 128)
     p = q * 2 + 1
     while True:
         if isprime(p):
             g = generate_g(q, p)
             if g is not None:
                 break
-        q = randprime(2**64, 2**128)
+        q = randprime(2 ** 64, 2 ** 128)
         p = q * 2 + 1
-
-    a = randint(1, p)
-    A = pow(g, a, p)
-    return p, g, A, a
+    return q, p
 
 
-def calculate_secret_key(p, g, A) -> tuple[int, int]:
-    b = randint(1, p)
-    B = pow(g, b, p)
-    key = pow(A, b, p)
-    return B, key
+def generate_a(order):
+    if order < 0:
+        raise DiffieHellmanError
+    a = randint(10**order, 10**(order+1)-1)
+    return a
+
+
+def calculate_A(p, g, a):
+    if not isprime(p) or not 1 <= a or not is_primitive_root(g, p):
+        raise DiffieHellmanError
+    return pow(g, a, p)
+
+
+def calculate_secret_key(p, a, B) -> int:
+    if not isprime(p) or not 1 <= a or not 0 <= B < p:
+        raise DiffieHellmanError
+    key = pow(B, a, p)
+    return key

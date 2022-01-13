@@ -11,7 +11,7 @@ class Server:
     def __init__(self, log_file=None):
         logging.basicConfig(filename=log_file,
                             filemode='a',
-                            format='%(levelname)s - %(message)s',
+                            format='%(message)s',
                             level=logging.DEBUG)
 
         self.socket = socket(AF_INET, SOCK_STREAM)
@@ -31,6 +31,7 @@ class Server:
         return max(client.id for client in self.clients) + 1
 
     def send_message_to_all(self, message: Message):
+        self.messages.append(message)
         for client in self.clients:
             client.send_message(message)
 
