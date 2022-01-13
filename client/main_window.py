@@ -100,11 +100,11 @@ class SecretChatInterface(tk.Tk):
 
         self.generate_diffie_hellman()
 
-        self.add_message(Message('Hello!', User('Adahn'), None))
-        self.add_message(Message('Another message!', User('User'), None))
-        self.add_message(Message('And another one!', User('Adahn'), None))
-        for i in range(16):
-            self.add_message(Message(str(i), User('Test'), None))
+        # self.add_message(Message('Hello!', User('Adahn'), None))
+        # self.add_message(Message('Another message!', User('User'), None))
+        # self.add_message(Message('And another one!', User('Adahn'), None))
+        # for i in range(16):
+        #     self.add_message(Message(str(i), User('Test'), None))
 
         self.protocol('WM_DELETE_WINDOW', self.on_close)
 
